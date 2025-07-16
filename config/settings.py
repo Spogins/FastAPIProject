@@ -57,6 +57,7 @@ WIRING_CONFIG = [
     'src.auth',
     'src.users',
     'src.blog',
+    'src.card',
     'src.core',
 ]
 

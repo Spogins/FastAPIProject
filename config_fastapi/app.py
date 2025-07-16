@@ -11,6 +11,7 @@ from src.blog.models import BlogAdmin
 from src.core.register import RegisterContainer
 from src.core.routers import router_app
 from src.users.models import UserAdmin
+from src.card.models import CardAdmin
 
 origins = [
     "http://localhost",
@@ -57,6 +58,7 @@ app = create_app()
 admin = Admin(app, RegisterContainer().db_container.db().engine, templates_dir='/admin/templates', authentication_backend=AuthenticationAdmin('admin'))
 admin.add_view(UserAdmin)
 admin.add_view(BlogAdmin)
+admin.add_view(CardAdmin)
 
 
 # @app.on_event('startup')

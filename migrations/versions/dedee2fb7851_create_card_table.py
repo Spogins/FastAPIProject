@@ -1,8 +1,8 @@
-"""migration
+"""create card table
 
-Revision ID: bf4f939a87fc
-Revises: 2ce982bc906f
-Create Date: 2025-07-16 13:13:34.698527
+Revision ID: dedee2fb7851
+Revises: 56d78ec924b5
+Create Date: 2025-07-16 15:11:41.146712
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'bf4f939a87fc'
-down_revision: Union[str, Sequence[str], None] = '2ce982bc906f'
+revision: str = 'dedee2fb7851'
+down_revision: Union[str, Sequence[str], None] = '56d78ec924b5'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

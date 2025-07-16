@@ -6,6 +6,10 @@ import os
 from pathlib import Path
 from src.core.db import Base  # где ты объявил declarative_base()
 from src.blog import models
+from src.card import models
+from src.users import models
+
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()

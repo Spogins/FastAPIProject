@@ -5,6 +5,8 @@ from src.users.endpoints import app as user_app
 from src.users.views import user_views
 from src.auth.endpoints import app as auth_app
 from src.auth.views import auth_views
+from src.card.endpoints import app as card_app
+from src.card.views import card_views
 
 router_app = APIRouter()
 API_PREFIX = "/api/v1"
@@ -13,8 +15,10 @@ API_PREFIX = "/api/v1"
 # router_app.include_router(auth_app, prefix=API_PREFIX, tags=["Auth"])
 # router_app.include_router(user_app, prefix=API_PREFIX, tags=["Users"])
 router_app.include_router(blog_app, prefix=API_PREFIX, tags=["Blog"])
+router_app.include_router(card_app, prefix=API_PREFIX, tags=["Card"])
 
 # VIEWS
 # router_app.include_router(auth_views)
 # router_app.include_router(user_views)
 router_app.include_router(blog_views)
+router_app.include_router(card_views)
