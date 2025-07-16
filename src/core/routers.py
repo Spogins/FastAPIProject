@@ -10,11 +10,11 @@ router_app = APIRouter()
 API_PREFIX = "/api/v1"
 
 # ENDPOINTS
-router_app.include_router(auth_app, prefix=API_PREFIX, tags=["Auth"])
-router_app.include_router(user_app, prefix=API_PREFIX, tags=["Users"])
+# router_app.include_router(auth_app, prefix=API_PREFIX, tags=["Auth"])
+# router_app.include_router(user_app, prefix=API_PREFIX, tags=["Users"])
 router_app.include_router(blog_app, prefix=API_PREFIX, tags=["Blog"])
 
 # VIEWS
-router_app.include_router(auth_views)
-router_app.include_router(user_views)
+# router_app.include_router(auth_views)
+# router_app.include_router(user_views)
 router_app.include_router(blog_views)

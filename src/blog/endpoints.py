@@ -2,7 +2,7 @@ from dependency_injector.wiring import inject, Provide
 from fastapi import APIRouter, Depends, Response, status, Request
 from src.blog.containers import Container
 from src.blog.repository import NotFoundError
-from src.blog.schemas import BlogModel
+from src.blog.schemas import PostBlogModel, GetBlogModel
 from src.blog.services.blog import BlogService
 
 app = APIRouter()
@@ -36,3 +36,9 @@ async def delete_by_id(
         return Response(status_code=status.HTTP_404_NOT_FOUND)
     else:
         return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@app.post("/create_blog", status_code=status.HTTP_201_CREATED)
+@inject
+async def create_eth_wallet(blog: PostBlogModel, blog_service: BlogService = Depends(Provide[Container.blog_service])):
+    return await blog_service.create_blog(blog)

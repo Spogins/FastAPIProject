@@ -15,3 +15,9 @@ class BlogService:
     async def get_blog_by_id(self, blog_id: int) -> Blog:
         return await self._repository.get_by_id(blog_id)
 
+    async def delete_blog_by_id(self, blog_id: int) -> None:
+        return await self._repository.delete_by_id(blog_id)
+
+    async def create_blog(self, blog):
+        return await self._repository.add(blog)
+
