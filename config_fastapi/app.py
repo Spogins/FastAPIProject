@@ -1,0 +1,76 @@
+from fastapi.middleware.cors import CORSMiddleware
+from sqladmin import Admin
+from starlette.staticfiles import StaticFiles
+from admin.auth import AuthenticationAdmin
+from config.settings import RABBITMQ_URL
+from src.core.register import RegisterContainer
+from src.core.routers import router_app
+from src.users.models import UserAdmin
+from fastapi import FastAPI
+from src.blog.models import BlogAdmin
+from src.core.register import RegisterContainer
+from src.core.routers import router_app
+from src.users.models import UserAdmin
+
+origins = [
+    "http://localhost",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://161.35.217.120:8000",
+    "http://161.35.217.120/"
+]
+
+tags_metadata = [
+    {
+        'name': 'AsyncAPI Docs',
+        "externalDocs": {
+            "description": 'AsyncAPI documentations',
+            "url": 'http://0.0.0.0/asyncapi_docs'
+        }
+    }
+]
+
+
+def create_app() -> FastAPI:
+    container = RegisterContainer()
+    app = FastAPI(title='CryptoWallet',
+                  description='CryptoWallet API',
+                  version='1.0.1',
+                  openapi_tags=tags_metadata
+                  )
+    app.container = container
+    app.include_router(router_app)
+    # app.include_router(router, tags=['Propan'])
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+    app.mount("/static", StaticFiles(directory="static"), name="static")
+    app.mount("/admin/statics", StaticFiles(directory="admin/statics"), name="admin:statics")
+    return app
+
+
+app = create_app()
+admin = Admin(app, RegisterContainer().db_container.db().engine, templates_dir='/admin/templates', authentication_backend=AuthenticationAdmin('admin'))
+admin.add_view(UserAdmin)
+admin.add_view(BlogAdmin)
+
+
+# @app.on_event('startup')
+# async def publish_smtp():
+#     app.broker = broker
+#     app.broker.include_router(parser_router)
+#     app.broker.include_router(wallet_router)
+#     app.broker.include_router(delivery_router)
+#     app.broker.include_router(socketio_router)
+#     sio.start_background_task(check_block)
+#     sio.start_background_task(delivery)
+#     await broker.start()
+
+#
+# @app.on_event('shutdown')
+# async def publish_smtp():
+#     await broker.close()
