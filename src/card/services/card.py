@@ -21,3 +21,8 @@ class CardService:
     async def create_card(self, card):
         return await self._repository.add(card)
 
+    async def create_cards(self, amount: int):
+        return await self._repository.add_cards(amount)
+
+    async def delete_cards(self):
+        return await self._repository.delete_all()

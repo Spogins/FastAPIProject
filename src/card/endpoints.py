@@ -40,5 +40,18 @@ async def delete_by_id(
 
 @app.post("/create_card", status_code=status.HTTP_201_CREATED)
 @inject
-async def create_eth_wallet(card: PostCardModel, card_service: CardService = Depends(Provide[Container.card_service])):
+async def create_card(card: PostCardModel, card_service: CardService = Depends(Provide[Container.card_service])):
     return await card_service.create_card(card)
+
+
+@app.post("/create_cards", status_code=status.HTTP_201_CREATED)
+@inject
+async def create_cards(amount: int, card_service: CardService = Depends(Provide[Container.card_service])):
+    return await card_service.create_cards(amount)
+
+
+@app.delete("/delete_cards", status_code=status.HTTP_201_CREATED)
+@inject
+async def delete_cards(card_service: CardService = Depends(Provide[Container.card_service])):
+    return await card_service.delete_cards()
+

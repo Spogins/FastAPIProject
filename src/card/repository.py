@@ -33,6 +33,19 @@ class CardRepository:
             await session.refresh(card)
             return card
 
+
+    async def add_cards(self, amount: int):
+        async with self.session_factory() as session:
+            cards = []
+            for ind in range(amount):
+                card = Card(title="ran title")
+                session.add(card)
+                await session.commit()
+                await session.refresh(card)
+                cards.append(card)
+            return cards
+
+
     async def delete_by_id(self, card_id: int) -> None:
         async with self.session_factory() as session:
             card = await session.get(Card, card_id)
@@ -40,6 +53,16 @@ class CardRepository:
                 raise HTTPException(status_code=401, detail=f"Card not found, id: {card_id}")
             await session.delete(card)
             await session.commit()
+
+    async def delete_all(self) -> None:
+        async with self.session_factory() as session:
+            result = await session.execute(select(Card))
+            cards = result.scalars().all()
+            for card in cards:
+                await session.delete(card)
+                await session.commit()
+        return "all deleted"
+
 
 class NotFoundError(Exception):
 
